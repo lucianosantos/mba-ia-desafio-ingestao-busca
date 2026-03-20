@@ -1,5 +1,4 @@
 import os
-import time
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -18,7 +17,7 @@ for k in ("GOOGLE_API_KEY", "GOOGLE_EMBEDDING_MODEL", "PG_VECTOR_URL","PG_VECTOR
 current_dir = Path(__file__).parent
 PDF_PATH = os.getenv("PDF_PATH")
 
-def ingest_pdf():
+def get_documents_from_file():
     docs = PyPDFLoader(str(PDF_PATH)).load()
 
     splits = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=150, add_start_index=False).split_documents(docs)
@@ -34,6 +33,9 @@ def ingest_pdf():
         for doc in splits
     ]
 
+    return enriched
+
+def save_documents(enriched):
     ids =[f"doc-{i}" for i in range(len(enriched))]
 
     embeddings = GoogleGenerativeAIEmbeddings(model=os.getenv("GOOGLE_EMBEDDING_MODEL"))
@@ -57,6 +59,10 @@ def ingest_pdf():
     #        time.sleep(2)
 
     print(f"\nIngestion complete!")
+
+def ingest_pdf():
+    documents = get_documents_from_file()
+    save_documents(documents)
 
 if __name__ == "__main__":
     ingest_pdf()
