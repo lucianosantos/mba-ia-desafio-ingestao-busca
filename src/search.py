@@ -40,10 +40,6 @@ for k in ("GOOGLE_API_KEY", "GOOGLE_EMBEDDING_MODEL", "PG_VECTOR_URL","PG_VECTOR
     if not os.getenv(k):
         raise RuntimeError(f"Environment variable {k} is not set")
     
-# query = "Que horas são?"
-# query = "Quais empresas de turismo vc conhece?"
-# query = "Quais são os maiores faturamentos e suas empresas?"
-query = "Quais são os menores faturamentos e suas empresas?"
 
 def get_related_data(query):
   embeddings = GoogleGenerativeAIEmbeddings(model=os.getenv("GOOGLE_EMBEDDING_MODEL"))
@@ -83,10 +79,9 @@ def invoke_model_with_data(query, data):
 
   return result
 
-data = get_related_data(query)
-result = invoke_model_with_data(query, data)
-
-print(result)
-
 def search_prompt(question=None):
-    pass
+  if not question:
+    return None
+  
+  data = get_related_data(question)
+  return invoke_model_with_data(question, data)
