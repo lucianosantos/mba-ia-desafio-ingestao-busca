@@ -79,7 +79,7 @@ DATABASE_URL=postgresql+psycopg://postgres:postgres@localhost:5432/rag
 PG_VECTOR_COLLECTION_NAME=seu_nome_colecao
 
 # Caminho para o arquivo PDF a ser processado
-PDF_PATH=path/to/seu/documento.pdf
+PDF_PATH=path/para/o/seu/documento.pdf
 ```
 
 #### Como obter a chave de API do Google:
