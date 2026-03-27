@@ -36,7 +36,7 @@ PERGUNTA DO USUÁRIO:
 RESPONDA A "PERGUNTA DO USUÁRIO"
 """
 
-for k in ("GOOGLE_API_KEY", "GOOGLE_EMBEDDING_MODEL", "PG_VECTOR_URL","PG_VECTOR_COLLECTION_NAME"):
+for k in ("GOOGLE_API_KEY", "GOOGLE_EMBEDDING_MODEL", "DATABASE_URL","PG_VECTOR_COLLECTION_NAME"):
     if not os.getenv(k):
         raise RuntimeError(f"Environment variable {k} is not set")
     
@@ -47,7 +47,7 @@ def get_related_data(query):
   store = PGVector(
       embeddings=embeddings,
       collection_name=os.getenv("PG_VECTOR_COLLECTION_NAME"),
-      connection=os.getenv("PG_VECTOR_URL"),
+      connection=os.getenv("DATABASE_URL"),
       use_jsonb=True
   )
 
